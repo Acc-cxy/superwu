@@ -7,6 +7,7 @@
     <tab-control class="tab-control"
                  :titles="['流行', '新款', '精选']"
                  @tabClick="tabClick"/>
+    <Goodlist :goods="goods['pop'].list"/>
     <ul>
       <li>1</li>
       <li>1</li>
@@ -66,6 +67,7 @@
   import RecommendView from './childComps/RecommendView'
   import TabControl from 'components/content/TabControl/TabControl'
   import feature from "./childComps/feature"
+  import Goodlist from "components/content/goods/Goodlist"
   import {getHomeMultidata,getHomeGoods} from "network/home"
   export default {
     name: "Home",
@@ -74,8 +76,8 @@
       HomeSwiper,
       RecommendView,
       feature,
-      TabControl
-
+      TabControl,
+      Goodlist
     },
     data() {
       return {
@@ -92,8 +94,8 @@
       // 1.请求多个数据
       this.getHomeMultidata()
 
-      this.getHomeGoods('new')
       this.getHomeGoods('pop')
+      this.getHomeGoods('new')
       this.getHomeGoods('sell')
     },
     methods: {
