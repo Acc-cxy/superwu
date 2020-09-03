@@ -1,5 +1,6 @@
 <template>
   <div class="tab-control">
+    <!--eslint-disable-next-line-->
     <div v-for="(item, index) in titles"
          class="tab-control-item"
          :class="{active: index === currentIndex}"

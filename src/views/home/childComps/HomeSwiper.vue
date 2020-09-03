@@ -1,6 +1,7 @@
 <template>
   <swiper>
-    <swiper-item v-for="item in banners">
+    <!--eslint-disable-next-line-->
+    <swiper-item v-for="item in banners" >
       <a :href="item.link">
         <img :src="item.image" alt="">
       </a>

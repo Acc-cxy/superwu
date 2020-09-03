@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="goodsitem">
       <img :src="gooditem.show.img" alt="#">
       <div>
         <p>{{gooditem.title}}</p>
-        <span>{{gooditem.orgPrice}}</span>
+        <span class="price">{{gooditem.orgPrice}}</span>
       </div>
     </div>
 </template>
@@ -23,5 +23,26 @@ export default {
 </script>
 
 <style scoped>
+  .goodsitem{
+    width: 50%;
+    display: inline-block;
+    padding: 10px;
+  }
 
+  .goodsitem img{
+    width: 100%;
+  }
+
+  .goodsitem div p{
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 2;
+  }
+
+  .goodsitem div span.price{
+    color: var(--color-tint);
+    text-align: center;
+  }
 </style>

@@ -1,63 +1,16 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-    <home-swiper :banners="banners"/>
-    <recommend-view :recommends="recommends"/>
-    <feature/>
-    <tab-control class="tab-control"
-                 :titles="['流行', '新款', '精选']"
-                 @tabClick="tabClick"/>
-    <Goodlist :goods="goods['pop'].list"/>
-    <ul>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-    </ul>
+
+    <Scroll class="scroll-box">
+      <home-swiper :banners="banners"/>
+      <recommend-view :recommends="recommends"/>
+      <feature/>
+      <tab-control class="tab-control"
+                   :titles="['流行', '新款', '精选']"
+                   @tabClick="tabClick"/>
+      <Goodlist :goods='showGoods'/>
+    </Scroll>
   </div>
 </template>
 
@@ -67,8 +20,9 @@
   import RecommendView from './childComps/RecommendView'
   import TabControl from 'components/content/TabControl/TabControl'
   import feature from "./childComps/feature"
-  import Goodlist from "components/content/goods/Goodlist"
-  import {getHomeMultidata,getHomeGoods} from "network/home"
+  import Goodlist from 'components/content/goods/Goodlist'
+  import Scroll from "components/common/componets/Scroll"
+  import {getHomeMultidata,getHomeGoods} from 'network/home'
   export default {
     name: "Home",
     components: {
@@ -77,7 +31,8 @@
       RecommendView,
       feature,
       TabControl,
-      Goodlist
+      Goodlist,
+      Scroll
     },
     data() {
       return {
@@ -87,7 +42,13 @@
           'pop': {page: 0, list: []},
           'new': {page: 0, list: []},
           'sell': {page: 0, list: []},
-        }
+        },
+        currentType: 'pop'
+      }
+    },
+    computed: {
+      showGoods() {
+        return this.goods[this.currentType].list
       }
     },
     created() {
@@ -136,7 +97,8 @@
 
 <style scoped>
   #home{
-    padding-top: 44px;
+    height: 100vh;
+    position: relative;
   }
   .home-nav {
     background-color: var(--color-tint);
@@ -146,10 +108,18 @@
     width: 100%;
     z-index: 9;
   }
-
   .tab-control {
     position: sticky;
     top: 44px;
     z-index: 9;
+  }
+
+  .scroll-box{
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
+    overflow: hidden;
   }
 </style>
