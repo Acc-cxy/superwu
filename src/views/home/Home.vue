@@ -2,7 +2,7 @@
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
 
-    <Scroll class="scroll-box">
+    <scroll ref="abc" class="scroll-box">
       <home-swiper :banners="banners"/>
       <recommend-view :recommends="recommends"/>
       <feature/>
@@ -10,7 +10,9 @@
                    :titles="['流行', '新款', '精选']"
                    @tabClick="tabClick"/>
       <Goodlist :goods='showGoods'/>
-    </Scroll>
+    </scroll>
+
+    <backtop />
   </div>
 </template>
 
@@ -21,7 +23,8 @@
   import TabControl from 'components/content/TabControl/TabControl'
   import feature from "./childComps/feature"
   import Goodlist from 'components/content/goods/Goodlist'
-  import Scroll from "components/common/componets/Scroll"
+  import scroll from "components/common/componets/Scroll"
+  import backtop from "components/content/backtop/backtop"
   import {getHomeMultidata,getHomeGoods} from 'network/home'
   export default {
     name: "Home",
@@ -32,7 +35,8 @@
       feature,
       TabControl,
       Goodlist,
-      Scroll
+      scroll,
+      backtop
     },
     data() {
       return {
@@ -76,11 +80,15 @@
             break
         }
       },
+      // backtop(){
+      //   this.$refs.scroll.scroll.scrollto(0,0)
+      // },
       getHomeMultidata(){
         getHomeMultidata().then(res => {
           // this.result = res;
           this.banners = res.data.banner.list;
           this.recommends = res.data.recommend.list;
+          // console.log(res)
         })
       },
       getHomeGoods(type){
@@ -90,7 +98,6 @@
           this.goods[type].page +=1
         })
       }
-
     }
   }
 </script>
@@ -109,17 +116,17 @@
     z-index: 9;
   }
   .tab-control {
-    position: sticky;
-    top: 44px;
     z-index: 9;
   }
 
   .scroll-box{
-    position: absolute;
-    top: 44px;
-    bottom: 49px;
-    left: 0;
-    right: 0;
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*top: 44px;*/
+    /*bottom: 49px;*/
+    height: calc(100% - 93px);
+    margin-top: 44px;
     overflow: hidden;
   }
 </style>

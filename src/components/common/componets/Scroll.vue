@@ -10,7 +10,7 @@
   import BScroll from 'better-scroll'
 
   export default {
-    name:"Scroll",
+    name:"scroll",
     data() {
       return {
         scroll:null
@@ -19,8 +19,8 @@
     mounted() {
       this.scroll = new BScroll(this.$refs.wrapper, {
       // this.scroll = new BScroll (this.$refs.wrapper,{
-
       })
+      this.scroll.scrollTo(0,0)
     }
   }
 </script>
