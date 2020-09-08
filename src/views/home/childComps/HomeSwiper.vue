@@ -3,7 +3,7 @@
     <!--eslint-disable-next-line-->
     <swiper-item v-for="item in banners" >
       <a :href="item.link">
-        <img :src="item.image" alt="">
+        <img :src="item.image" alt="" @load="imgaeload">
       </a>
     </swiper-item>
   </swiper>
@@ -22,9 +22,22 @@
         }
       }
     },
+    data() {
+      return {
+        isLoad:false
+      }
+    },
     components: {
       Swiper,
       SwiperItem
+    },
+    methods: {
+      imgaeload() {
+        if(!this.isLoad){
+          this.$emit('imgaebox')
+          this.isLoad = true
+        }
+      }
     }
   }
 </script>

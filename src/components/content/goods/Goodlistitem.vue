@@ -1,10 +1,12 @@
 <template>
     <div class="goodsitem">
-      <img :src="gooditem.show.img" alt="#" @load="imageload">
-      <div>
-        <p>{{gooditem.title}}</p>
-        <span class="price">{{gooditem.orgPrice}}</span>
-      </div>
+      <a :href="gooditem.clientUrl">
+        <img :src="gooditem.show.img" alt="#" @load="imageload">
+        <div>
+          <p>{{gooditem.title}}</p>
+          <span class="price">{{gooditem.orgPrice}}</span>
+        </div>
+      </a>
     </div>
 </template>
 
