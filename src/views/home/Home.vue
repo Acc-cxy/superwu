@@ -2,17 +2,21 @@
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
 
-    <scroll ref="abc" class="scroll-box">
-      <home-swiper :banners="banners"/>
-      <recommend-view :recommends="recommends"/>
-      <feature/>
-      <tab-control class="tab-control"
-                   :titles="['流行', '新款', '精选']"
-                   @tabClick="tabClick"/>
-      <Goodlist :goods='showGoods'/>
+    <scroll ref="scroll"
+            class="scroll-box"
+            :probe-type="3"
+            @scroll="contentScroll"
+            :pull-up-load="true">
+            <home-swiper :banners="banners"/>
+            <recommend-view :recommends="recommends"/>
+            <feature/>
+            <tab-control class="tab-control"
+                         :titles="['流行', '新款', '精选']"
+                         @tabClick="tabClick"/>
+            <Goodlist :goods='showGoods'/>
     </scroll>
 
-    <backtop />
+    <backtop @click.native="backClick" v-show="isShowBackTop"/>
   </div>
 </template>
 
@@ -47,13 +51,14 @@
           'new': {page: 0, list: []},
           'sell': {page: 0, list: []},
         },
-        currentType: 'pop'
+        currentType: 'pop',
+        isShowBackTop: false
       }
     },
     computed: {
       showGoods() {
         return this.goods[this.currentType].list
-      }
+      },
     },
     created() {
       // 1.请求多个数据
@@ -62,6 +67,12 @@
       this.getHomeGoods('pop')
       this.getHomeGoods('new')
       this.getHomeGoods('sell')
+
+      // 监听图片加载完成
+      this.$bus.$on('itemimgload',()=>{
+        console.log(1)
+        this.$refs.scroll.refresh()
+      })
     },
     methods: {
       /**
@@ -80,15 +91,19 @@
             break
         }
       },
-      // backtop(){
-      //   this.$refs.scroll.scroll.scrollto(0,0)
-      // },
+      // 新增
+      backClick() {
+        this.$refs.scroll.scrollTo(0, 0,3000)
+      },
+      contentScroll(position) {
+        this.isShowBackTop = (-position.y) > 100
+      },
+
+
       getHomeMultidata(){
         getHomeMultidata().then(res => {
-          // this.result = res;
           this.banners = res.data.banner.list;
           this.recommends = res.data.recommend.list;
-          // console.log(res)
         })
       },
       getHomeGoods(type){
@@ -96,6 +111,7 @@
         getHomeGoods(type , page).then(res => {
           this.goods[type].list.push(...res.data.list)
           this.goods[type].page +=1
+
         })
       }
     }
@@ -110,8 +126,6 @@
   .home-nav {
     background-color: var(--color-tint);
     color: #fff;
-    position: fixed;
-    top: 0;
     width: 100%;
     z-index: 9;
   }
@@ -120,13 +134,13 @@
   }
 
   .scroll-box{
-    /*position: absolute;*/
-    /*left: 0;*/
-    /*right: 0;*/
-    /*top: 44px;*/
-    /*bottom: 49px;*/
-    height: calc(100% - 93px);
-    margin-top: 44px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 44px;
+    bottom: 49px;
+    /*height: calc(100% - 93px);*/
+    /*margin-top: 44px;*/
     overflow: hidden;
   }
 </style>
