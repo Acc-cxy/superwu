@@ -1,12 +1,10 @@
 <template>
-    <div class="goodsitem">
-      <a :href="gooditem.clientUrl">
+    <div class="goodsitem" @click="itemclick">
         <img :src="gooditem.show.img" alt="#" @load="imageload">
         <div>
           <p>{{gooditem.title}}</p>
           <span class="price">{{gooditem.orgPrice}}</span>
         </div>
-      </a>
     </div>
 </template>
 
@@ -24,6 +22,9 @@ export default {
   methods:{
     imageload() {
       this.$bus.$emit('itemimgload')
+    },
+    itemclick() {
+      this.$router.push('/detail/' + this.gooditem.iid)
     }
   }
 }

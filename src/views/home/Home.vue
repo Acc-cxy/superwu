@@ -1,7 +1,11 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-
+    <tab-control :titles="['流行', '新款', '精选']"
+                 @tabClick="tabClick"
+                 ref="tabControl1"
+                 class="tab-control"
+                 v-show="isfixed"/>
     <scroll ref="scroll"
             class="scroll-box"
             :probe-type="3"
@@ -14,8 +18,7 @@
             <feature/>
             <tab-control :titles="['流行', '新款', '精选']"
                          @tabClick="tabClick"
-                         ref="tabControl"
-                         :class="{fixed:isfixed}"/>
+                         ref="tabControl2"/>
             <Goodlist :goods='showGoods'/>
     </scroll>
 
@@ -27,8 +30,8 @@
   import NavBar from 'components/common/navbar/NavBar'
   import HomeSwiper from './childComps/HomeSwiper'
   import RecommendView from './childComps/RecommendView'
-  import TabControl from 'components/content/TabControl/TabControl'
   import feature from "./childComps/feature"
+  import TabControl from 'components/content/TabControl/TabControl'
   import Goodlist from 'components/content/goods/Goodlist'
   import scroll from "components/common/componets/Scroll"
   import backtop from "components/content/backtop/backtop"
@@ -59,13 +62,25 @@
         currentType: 'pop',
         isShowBackTop: false,
         tabOffsetTop:0,
-        isfixed:false
+        isfixed:false,
+        saveY:0
       }
     },
     computed: {
       showGoods() {
         return this.goods[this.currentType].list
       },
+    },
+    destroyed() {
+      console.log('home-destroyed')
+    },
+    activated() {
+      this.$refs.scroll.scrollTo(0,this.saveY,0)
+      this.$refs.scroll.refresh()
+    },
+    deactivated() {
+      this.saveY = this.$refs.scroll.getsaveY()
+      // console.log(this.saveY)
     },
     created() {
       // 1.请求多个数据
@@ -99,6 +114,8 @@
             this.currentType = 'sell'
             break
         }
+        this.$refs.tabControl1.currentIndex = index;
+        this.$refs.tabControl2.currentIndex = index;
       },
       // 新增
       backClick() {
@@ -118,13 +135,13 @@
       },
       //吸顶settop
       imgaebox(){
-        this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop
-        console.log(this.tabOffsetTop)
+        this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
       },
 
       getHomeMultidata(){
         getHomeMultidata().then(res => {
           this.banners = res.data.banner.list;
+          console.log(this.banners)
           this.recommends = res.data.recommend.list;
         })
       },
@@ -162,5 +179,10 @@
     /*height: calc(100% - 93px);*/
     /*margin-top: 44px;*/
     overflow: hidden;
+  }
+
+  .tab-control{
+    position: relative;
+    z-index: 9;
   }
 </style>

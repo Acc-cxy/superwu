@@ -56,10 +56,12 @@
       },
       refresh() {
         this.scroll && this.scroll.refresh()
-        console.log('-----')
       },
       finishPullUp() {
         this.scroll && this.scroll.finishPullUp()
+      },
+      getsaveY() {
+        return this.scroll ? this.scroll.y : 0
       }
     }
   }
