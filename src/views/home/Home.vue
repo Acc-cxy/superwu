@@ -63,7 +63,8 @@
         isShowBackTop: false,
         tabOffsetTop:0,
         isfixed:false,
-        saveY:0
+        saveY:0,
+        getup:null
       }
     },
     computed: {
@@ -81,6 +82,9 @@
     deactivated() {
       this.saveY = this.$refs.scroll.getsaveY()
       // console.log(this.saveY)
+
+      // 取消全局监听
+      this.$bus.$off('getup',this.getup)
     },
     created() {
       // 1.请求多个数据
@@ -93,15 +97,17 @@
     mounted() {
       // 监听图片加载完成
       const refresh = debounce(this.$refs.scroll.refresh,30)
-      this.$bus.$on('itemimgload',()=>{
+
+      this.getup=()=>{
         refresh()
-      })
+      }
+
+      this.$bus.$on('itemimgload',this.getup)
     },
     methods: {
       /**
        * 事件监听相关的方法
        */
-
       tabClick(index) {
         switch (index) {
           case 0:

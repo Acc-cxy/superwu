@@ -1,7 +1,7 @@
 <template>
     <div class="goods">
          <!--eslint-disable-next-line-->
-        <goodlistitem v-for="item in goods"  :gooditem="item"/>
+        <goodlistitem v-for="item in goods" :gooditem="item"/>
     </div>
 </template>
 
