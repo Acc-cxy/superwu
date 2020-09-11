@@ -120,6 +120,7 @@
             this.currentType = 'sell'
             break
         }
+        console.log(index)
         this.$refs.tabControl1.currentIndex = index;
         this.$refs.tabControl2.currentIndex = index;
       },
@@ -147,10 +148,11 @@
       getHomeMultidata(){
         getHomeMultidata().then(res => {
           this.banners = res.data.banner.list;
-          console.log(this.banners)
+          // console.log(this.banners)
           this.recommends = res.data.recommend.list;
         })
       },
+
       getHomeGoods(type){
         const page = this.goods[type].page + 1
         getHomeGoods(type , page).then(res => {
@@ -169,6 +171,7 @@
     height: 100vh;
     position: relative;
   }
+
   .home-nav {
     background-color: var(--color-tint);
     color: #fff;

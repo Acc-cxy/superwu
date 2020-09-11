@@ -1,6 +1,6 @@
 <template>
     <div id="detail">
-      <DetailNavbar class="datailnavbar"/>
+      <DetailNavbar class="datailnavbar" @titleclick="titleclick"/>
       <Scroll class="scroll-box" ref="scroll">
         <DetailSwiper
             :top-images="topImages"/>
@@ -10,8 +10,10 @@
             :detail-info="detailInfo"
              @imageLoad="imageLoad"/>
         <DetailParamInfo :paramInfo="goodsParam"/>
-        <Goodlist :goods="recommend"/>
+        <DetailCommentInfo  :commentInfo="commentInfo"/>
+        <Goodlist :goods="recommend" />
       </Scroll>
+      <backtop @click.native="backClick" v-show="isShowBackTop"/>
     </div>
 </template>
 
@@ -23,10 +25,12 @@ import DetailShopInfo from "./childComps/DetailShopInfo";
 import Scroll from "components/common/componets/Scroll";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
+import DetailCommentInfo from "./childComps/DetailCommentInfo";
 import Goodlist from "components/content/goods/Goodlist";
 
-import {getdetail,Goods,Shop,GoodsParam,getrecommend} from "../../network/detail";
+import backtop from "components/content/backtop/backtop";
 
+import {getdetail,Goods,Shop,GoodsParam,getrecommend} from "../../network/detail";
 import {mixinorder} from "common/mixin"
 
 export default {
@@ -38,8 +42,10 @@ export default {
     DetailShopInfo,
     DetailGoodsInfo,
     DetailParamInfo,
+    DetailCommentInfo,
     Scroll,
-    Goodlist
+    Goodlist,
+    backtop
   },
   data() {
    return {
@@ -50,7 +56,10 @@ export default {
      detailInfo: {},
      goodsParam:{},
      recommend:[],
-     getup:null
+     getup:null,
+     commentInfo:{},
+     isShowBackTop:true,
+     themetops:[0,1000,2000,3000]
    }
  },
   mixins:[mixinorder],
@@ -59,7 +68,7 @@ export default {
     this.iid = this.$route.params.iid
     // 获取详情页信息
     getdetail(this.iid).then(res=>{
-      console.log(res)
+      // console.log(res)
       const data = res.result;
       this.topImages = data.itemInfo.topImages
       //创建商品信息
@@ -74,6 +83,10 @@ export default {
       //商品参数
       this.goodsParam = new GoodsParam(data.itemParams.info,data.itemParams.rule)
 
+      //评论信息
+      // if (data.rate.list) {
+        this.commentInfo = data.rate.list[0];
+      // }
     })
 
     // 获取推荐信息
@@ -86,9 +99,22 @@ export default {
   methods: {
     imageLoad() {
       this.$refs.scroll.refresh()
+    },
+    backClick() {
+      this.$refs.scroll.scrollTo(0, 0,3000)
+    },
+    contentScroll(position) {
+      // console.log(position)
+      //判断backtop是否显示
+      this.isShowBackTop = (-position.y) > 1000
+    },
+    titleclick(index) {
+      console.log(index)
+      this.$refs.scroll.scrollTo(0,-this.themetops[index],500)
     }
   },
-  mounted() {
+  updated() {
+    this.themetops = []
   },
   destroyed() {
     this.$bus.$off('getup',this.getup)
