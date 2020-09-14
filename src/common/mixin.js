@@ -7,6 +7,5 @@ export const mixinorder ={
             refresh()
         }
         this.$bus.$on('itemimgload',this.getup)
-        console.log('Black')
     }
 }

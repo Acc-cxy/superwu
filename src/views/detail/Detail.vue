@@ -1,19 +1,22 @@
 <template>
     <div id="detail">
-      <DetailNavbar class="datailnavbar" @titleclick="titleclick"/>
-      <Scroll class="scroll-box" ref="scroll">
-        <DetailSwiper
-            :top-images="topImages"/>
+      <DetailNavbar class="datailnavbar" @titleclick="titleclick" ref="nav"/>
+      <Scroll class="scroll-box"
+              ref="scroll"
+              :probe-type="3"
+              @scroll="contentScroll">
+        <DetailSwiper :top-images="topImages"/>
         <DetailBaseInfo :goods="goods"/>
         <DetailShopInfo :shop="shop"/>
         <DetailGoodsInfo
             :detail-info="detailInfo"
              @imageLoad="imageLoad"/>
-        <DetailParamInfo :paramInfo="goodsParam"/>
-        <DetailCommentInfo  :commentInfo="commentInfo"/>
-        <Goodlist :goods="recommend" />
+        <DetailParamInfo ref="param" :paramInfo="goodsParam"/>
+        <DetailCommentInfo ref="commen" :commentInfo="commentInfo"/>
+        <Goodlist ref="good" :goods="recommend" />
       </Scroll>
       <backtop @click.native="backClick" v-show="isShowBackTop"/>
+      <Detailbottonbar/>
     </div>
 </template>
 
@@ -27,11 +30,13 @@ import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
 import Goodlist from "components/content/goods/Goodlist";
+import Detailbottonbar from "./childComps/Detailbottonbar";
 
 import backtop from "components/content/backtop/backtop";
 
 import {getdetail,Goods,Shop,GoodsParam,getrecommend} from "../../network/detail";
 import {mixinorder} from "common/mixin"
+import {debounce} from "common/utils"
 
 export default {
   name: "Detail",
@@ -43,6 +48,7 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
+    Detailbottonbar,
     Scroll,
     Goodlist,
     backtop
@@ -58,8 +64,10 @@ export default {
      recommend:[],
      getup:null,
      commentInfo:{},
-     isShowBackTop:true,
-     themetops:[0,1000,2000,3000]
+     isShowBackTop:false,
+     themetops:[],
+     getthemetops:null,
+     currentIndex: 0
    }
  },
   mixins:[mixinorder],
@@ -84,37 +92,68 @@ export default {
       this.goodsParam = new GoodsParam(data.itemParams.info,data.itemParams.rule)
 
       //评论信息
-      // if (data.rate.list) {
-        this.commentInfo = data.rate.list[0];
-      // }
+       if (data.rate.list) {
+          this.commentInfo = data.rate.list[0];
+       }
+      //  this.$nextTick(() =>{
+      //    this.themetops = []
+      //    this.themetops.push(0);
+      //    this.themetops.push(this.$refs.param.$el.offsetTop)
+      //    this.themetops.push(this.$refs.commen.$el.offsetTop)
+      //    this.themetops.push(this.$refs.good.$el.offsetTop)
+      //    console.log(this.themetops)
+      // })
+
+
     })
 
     // 获取推荐信息
     getrecommend().then(res=>{
-      console.log(res)
+      // console.log(res)
       this.recommend = res.data.list
     })
 
+    this.getthemetops = debounce(() =>{
+      this.themetops = []
+      this.themetops.push(0);
+      this.themetops.push(this.$refs.param.$el.offsetTop)
+      this.themetops.push(this.$refs.commen.$el.offsetTop)
+      this.themetops.push(this.$refs.good.$el.offsetTop)
+      this.themetops.push(Number.MAX_VALUE)
+    },200)
   },
   methods: {
     imageLoad() {
+      // this.newRefresh()
       this.$refs.scroll.refresh()
+
+      this.getthemetops()
     },
     backClick() {
       this.$refs.scroll.scrollTo(0, 0,3000)
     },
     contentScroll(position) {
-      // console.log(position)
       //判断backtop是否显示
       this.isShowBackTop = (-position.y) > 1000
+
+      //获取y值
+      const positiony = -position.y
+      let length = this.themetops.length
+      for(let i = 0; i < length-1;i++){
+        // if(this.currentIndex !==i && ((i < length - 1 && positiony >= this.themetops[i] && positiony <
+        //     this.themetops[i+1]) || (i === length -1 && positiony >this.themetops[i]))) {
+        //   this.currentIndex = i;
+        //   this.$refs.nav.currentIndex= this.currentIndex
+        // }
+        if(this.currentIndex !==i && (positiony >= this.themetops[i] && positiony < this.themetops[i+1])){
+          this.currentIndex = i;
+          this.$refs.nav.currentIndex= this.currentIndex
+        }
+      }
     },
     titleclick(index) {
-      console.log(index)
       this.$refs.scroll.scrollTo(0,-this.themetops[index],500)
     }
-  },
-  updated() {
-    this.themetops = []
   },
   destroyed() {
     this.$bus.$off('getup',this.getup)
@@ -128,6 +167,7 @@ export default {
     z-index: 999;
     background: #ffffff;
     height: 100vh;
+    overflow: hidden;
   }
 
   .datailnavbar{
@@ -137,7 +177,11 @@ export default {
   }
 
   .scroll-box{
-    height: calc(100% - 44px);
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
   }
 
 
