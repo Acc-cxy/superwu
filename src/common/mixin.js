@@ -1,4 +1,5 @@
 import {debounce} from "./utils";
+import backtop from "@/components/content/backtop/backtop";
 
 export const mixinorder ={
     mounted() {
@@ -7,5 +8,21 @@ export const mixinorder ={
             refresh()
         }
         this.$bus.$on('itemimgload',this.getup)
+    }
+}
+
+export const backtops ={
+    components:{
+      backtop
+    },
+    data(){
+        return{
+            isShowBackTop: false
+        }
+    },
+    methods:{
+        backClick() {
+             this.$refs.scroll.scrollTo(0, 0,300)
+        }
     }
 }

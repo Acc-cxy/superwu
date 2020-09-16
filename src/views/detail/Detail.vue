@@ -5,6 +5,7 @@
               ref="scroll"
               :probe-type="3"
               @scroll="contentScroll">
+        <div>{{$store.state.cartlist.length}}</div>
         <DetailSwiper :top-images="topImages"/>
         <DetailBaseInfo :goods="goods"/>
         <DetailShopInfo :shop="shop"/>
@@ -15,8 +16,10 @@
         <DetailCommentInfo ref="commen" :commentInfo="commentInfo"/>
         <Goodlist ref="good" :goods="recommend" />
       </Scroll>
-      <backtop @click.native="backClick" v-show="isShowBackTop"/>
-      <Detailbottonbar/>
+      <backtop @click.native="backClick"
+               v-show="isShowBackTop"
+                />
+      <Detailbottonbar @addjoin="addjoin"/>
     </div>
 </template>
 
@@ -32,10 +35,9 @@ import DetailCommentInfo from "./childComps/DetailCommentInfo";
 import Goodlist from "components/content/goods/Goodlist";
 import Detailbottonbar from "./childComps/Detailbottonbar";
 
-import backtop from "components/content/backtop/backtop";
 
 import {getdetail,Goods,Shop,GoodsParam,getrecommend} from "../../network/detail";
-import {mixinorder} from "common/mixin"
+import {mixinorder,backtops} from "common/mixin"
 import {debounce} from "common/utils"
 
 export default {
@@ -50,8 +52,7 @@ export default {
     DetailCommentInfo,
     Detailbottonbar,
     Scroll,
-    Goodlist,
-    backtop
+    Goodlist
   },
   data() {
    return {
@@ -70,7 +71,7 @@ export default {
      currentIndex: 0
    }
  },
-  mixins:[mixinorder],
+  mixins:[mixinorder,backtops],
   created() {
     // 获取详情页id
     this.iid = this.$route.params.iid
@@ -129,9 +130,9 @@ export default {
 
       this.getthemetops()
     },
-    backClick() {
-      this.$refs.scroll.scrollTo(0, 0,3000)
-    },
+    // backClick() {
+    //   this.$refs.scroll.scrollTo(0, 0,3000)
+    // },
     contentScroll(position) {
       //判断backtop是否显示
       this.isShowBackTop = (-position.y) > 1000
@@ -153,6 +154,16 @@ export default {
     },
     titleclick(index) {
       this.$refs.scroll.scrollTo(0,-this.themetops[index],500)
+    },
+    addjoin(){
+      const product = {};
+      product.image = this.topImages[0];
+      product.title = this.goods.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.oldPrice;
+      product.idd = this.iid
+
+      this.$store.commit('addjoin',product)
     }
   },
   destroyed() {

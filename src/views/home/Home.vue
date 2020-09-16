@@ -34,9 +34,9 @@
   import TabControl from 'components/content/TabControl/TabControl'
   import Goodlist from 'components/content/goods/Goodlist'
   import scroll from "components/common/componets/Scroll"
-  import backtop from "components/content/backtop/backtop"
   import {getHomeMultidata,getHomeGoods} from 'network/home'
   import {debounce} from "common/utils"
+  import {backtops} from "common/mixin"
 
   export default {
     name: "Home",
@@ -47,8 +47,7 @@
       feature,
       TabControl,
       Goodlist,
-      scroll,
-      backtop
+      scroll
     },
     data() {
       return {
@@ -60,7 +59,6 @@
           'sell': {page: 0, list: []},
         },
         currentType: 'pop',
-        isShowBackTop: false,
         tabOffsetTop:0,
         isfixed:false,
         saveY:0,
@@ -86,6 +84,7 @@
       // 取消全局监听
       this.$bus.$off('getup',this.getup)
     },
+    mixins:[backtops],
     created() {
       // 1.请求多个数据
       this.getHomeMultidata()
@@ -101,7 +100,6 @@
       this.getup=()=>{
         refresh()
       }
-
       this.$bus.$on('itemimgload',this.getup)
     },
     methods: {
@@ -124,10 +122,9 @@
         this.$refs.tabControl1.currentIndex = index;
         this.$refs.tabControl2.currentIndex = index;
       },
-      // 新增
-      backClick() {
-        this.$refs.scroll.scrollTo(0, 0,3000)
-      },
+      // backClick() {
+      //   this.$refs.scroll.scrollTo(0, 0,3000)
+      // },
       //监听滑动位置
       contentScroll(position) {
         console.log(position)
