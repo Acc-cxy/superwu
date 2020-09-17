@@ -70,6 +70,7 @@
         return this.goods[this.currentType].list
       },
     },
+    mixins:[backtops],
     destroyed() {
       console.log('home-destroyed')
     },
@@ -84,7 +85,6 @@
       // 取消全局监听
       this.$bus.$off('getup',this.getup)
     },
-    mixins:[backtops],
     created() {
       // 1.请求多个数据
       this.getHomeMultidata()
@@ -127,7 +127,6 @@
       // },
       //监听滑动位置
       contentScroll(position) {
-        console.log(position)
         //判断backtop是否显示
         this.isShowBackTop = (-position.y) > 1000
 
