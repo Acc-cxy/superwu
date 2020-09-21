@@ -75,12 +75,12 @@
       console.log('home-destroyed')
     },
     activated() {
-      this.$refs.scroll.scrollTo(0,this.saveY,0)
+      this.$refs.scroll.scrollTo(0,this.saveY)
       this.$refs.scroll.refresh()
     },
     deactivated() {
       this.saveY = this.$refs.scroll.getsaveY()
-      // console.log(this.saveY)
+      console.log(this.saveY)
 
       // 取消全局监听
       this.$bus.$off('getup',this.getup)
@@ -122,9 +122,6 @@
         this.$refs.tabControl1.currentIndex = index;
         this.$refs.tabControl2.currentIndex = index;
       },
-      // backClick() {
-      //   this.$refs.scroll.scrollTo(0, 0,3000)
-      // },
       //监听滑动位置
       contentScroll(position) {
         //判断backtop是否显示
