@@ -5,7 +5,13 @@
               ref="scroll"
               :probe-type="3"
               @scroll="contentScroll">
-        <div>{{$store.state.cartlist.length}}</div>
+        <ul>
+          <!--eslint-disable-next-line-->
+          <li v-for="item in $store.state.cartlist">
+            {{item}}
+          </li>
+        </ul>
+<!--        <div>{{this.iid}}</div>-->
         <DetailSwiper :top-images="topImages"/>
         <DetailBaseInfo :goods="goods"/>
         <DetailShopInfo :shop="shop"/>
@@ -161,9 +167,9 @@ export default {
       product.title = this.goods.title;
       product.desc = this.goods.desc;
       product.price = this.goods.oldPrice;
-      product.idd = this.iid
-
-      this.$store.commit('addjoin',product)
+      product.iid = this.iid;
+	    // this.$store.commit('addjoin',product)
+      this.$store.dispatch('addjoin',product)
     }
   },
   destroyed() {
