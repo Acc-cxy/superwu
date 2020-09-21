@@ -11,7 +11,6 @@
             {{item}}
           </li>
         </ul>
-<!--        <div>{{this.iid}}</div>-->
         <DetailSwiper :top-images="topImages"/>
         <DetailBaseInfo :goods="goods"/>
         <DetailShopInfo :shop="shop"/>
@@ -102,16 +101,6 @@ export default {
        if (data.rate.list) {
           this.commentInfo = data.rate.list[0];
        }
-      //  this.$nextTick(() =>{
-      //    this.themetops = []
-      //    this.themetops.push(0);
-      //    this.themetops.push(this.$refs.param.$el.offsetTop)
-      //    this.themetops.push(this.$refs.commen.$el.offsetTop)
-      //    this.themetops.push(this.$refs.good.$el.offsetTop)
-      //    console.log(this.themetops)
-      // })
-
-
     })
 
     // 获取推荐信息
@@ -136,9 +125,6 @@ export default {
 
       this.getthemetops()
     },
-    // backClick() {
-    //   this.$refs.scroll.scrollTo(0, 0,3000)
-    // },
     contentScroll(position) {
       //判断backtop是否显示
       this.isShowBackTop = (-position.y) > 1000
@@ -168,8 +154,9 @@ export default {
       product.desc = this.goods.desc;
       product.price = this.goods.oldPrice;
       product.iid = this.iid;
-	    // this.$store.commit('addjoin',product)
-      this.$store.dispatch('addjoin',product)
+	    this.$store.commit('addjoinone',product)
+      // 重构失败代码
+      // this.$store.dispatch('addjoin',product)
     }
   },
   destroyed() {

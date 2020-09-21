@@ -11,7 +11,7 @@
       <!--eslint-disable-next-line-->
       <img v-for="(item, index) in detailInfo.detailImage[0].list"
            :src="item"
-           alt=""
+           alt="#"
            @load="imgLoad">
     </div>
   </div>

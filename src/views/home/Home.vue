@@ -74,7 +74,7 @@
       console.log('home-destroyed')
     },
     activated() {
-      this.$refs.scroll.scrollTo(0,this.saveY,0)
+      this.$refs.scroll.scrollTo(0,this.saveY)
       this.$refs.scroll.refresh()
     },
     deactivated() {
@@ -96,11 +96,12 @@
     mounted() {
       // 监听图片加载完成
       const refresh = debounce(this.$refs.scroll.refresh,30)
-
       this.getup=()=>{
         refresh()
       }
       this.$bus.$on('itemimgload',this.getup)
+
+
     },
     methods: {
       /**
@@ -127,7 +128,7 @@
       // },
       //监听滑动位置
       contentScroll(position) {
-        console.log(position)
+        // console.log(position)
         //判断backtop是否显示
         this.isShowBackTop = (-position.y) > 1000
 
