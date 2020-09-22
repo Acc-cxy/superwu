@@ -1,0 +1,30 @@
+[33m82cf45e[m[33m ([m[1;36mHEAD -> [m[1;32m3.0[m[33m)[m HEAD@{0}: checkout: moving from 3.0 to 3.0
+[33m82cf45e[m[33m ([m[1;36mHEAD -> [m[1;32m3.0[m[33m)[m HEAD@{1}: reset: moving to 82cf45ec9bbba3f08a951c94708c55125e90ef5b
+[33m48734fb[m[33m ([m[1;31morigin/3.0[m[33m)[m HEAD@{2}: checkout: moving from 2.0 to 3.0
+[33m7764687[m[33m ([m[1;32m2.0[m[33m)[m HEAD@{3}: commit: '9.21push'
+[33m2065533[m[33m ([m[1;31morigin/2.0[m[33m)[m HEAD@{4}: commit: '重构购物车出现bug'
+[33mc6c289e[m[33m ([m[1;32m'3.0'[m[33m)[m HEAD@{5}: checkout: moving from 3.0 to 2.0
+[33m48734fb[m[33m ([m[1;31morigin/3.0[m[33m)[m HEAD@{6}: commit: '购物车完成，bug解决'
+[33m98bd493[m HEAD@{7}: commit: 'bug处理'
+[33mc6c289e[m[33m ([m[1;32m'3.0'[m[33m)[m HEAD@{8}: checkout: moving from 2.0 to 3.0
+[33mc6c289e[m[33m ([m[1;32m'3.0'[m[33m)[m HEAD@{9}: commit: '9.16push'
+[33m82cf45e[m[33m ([m[1;36mHEAD -> [m[1;32m3.0[m[33m)[m HEAD@{10}: checkout: moving from master to 2.0
+[33mfdb5ef3[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{11}: checkout: moving from master to master
+[33mfdb5ef3[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{12}: checkout: moving from 2.0 to master
+[33m82cf45e[m[33m ([m[1;36mHEAD -> [m[1;32m3.0[m[33m)[m HEAD@{13}: commit: '9.14push'
+[33m67a948d[m HEAD@{14}: commit: '9.11push'
+[33m590e755[m HEAD@{15}: commit: '9.10new'
+[33mfdb5ef3[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{16}: checkout: moving from 2.0 to 2.0
+[33mfdb5ef3[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{17}: checkout: moving from master to 2.0
+[33mfdb5ef3[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{18}: commit: '9.9push‘
+[33m58585e1[m HEAD@{19}: commit: '9.8push'
+[33m4053413[m HEAD@{20}: commit: '滑动bug修复成功'
+[33m5bfe843[m HEAD@{21}: commit: 9.4push
+[33m20af21f[m HEAD@{22}: commit: 9.3日志
+[33mf42e37f[m HEAD@{23}: commit: 9.2push
+[33m016eb94[m HEAD@{24}: commit: 9.2morning
+[33md8d7710[m HEAD@{25}: commit: 数据来了
+[33ma8f8e2a[m HEAD@{26}: commit: 初步完成
+[33m26bdab8[m HEAD@{27}: commit: 首页完成
+[33m749b6c2[m HEAD@{28}: commit: qiuqiule
+[33m12f629d[m HEAD@{29}: commit (initial): init
