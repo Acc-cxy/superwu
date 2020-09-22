@@ -11,10 +11,6 @@
             {{item}}
           </li>
         </ul>
-<<<<<<< HEAD
-=======
-<!--        <div>{{this.iid}}</div>-->
->>>>>>> 48734fb5bf2117e6e7f72870263b86d0b138ed4d
         <DetailSwiper :top-images="topImages"/>
         <DetailBaseInfo :goods="goods"/>
         <DetailShopInfo :shop="shop"/>
@@ -158,12 +154,8 @@ export default {
       product.desc = this.goods.desc;
       product.price = this.goods.oldPrice;
       product.iid = this.iid;
-<<<<<<< HEAD
 	    this.$store.commit('addjoinone',product)
       // 重构失败代码
-=======
-	    this.$store.commit('addjoin',product)
->>>>>>> 48734fb5bf2117e6e7f72870263b86d0b138ed4d
       // this.$store.dispatch('addjoin',product)
     }
   },

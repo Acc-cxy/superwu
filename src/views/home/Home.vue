@@ -125,10 +125,7 @@
       },
       //监听滑动位置
       contentScroll(position) {
-<<<<<<< HEAD
         // console.log(position)
-=======
->>>>>>> 48734fb5bf2117e6e7f72870263b86d0b138ed4d
         //判断backtop是否显示
         this.isShowBackTop = (-position.y) > 1000
 
