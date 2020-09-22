@@ -17,8 +17,8 @@ export default {
             console.log(oldproduct)
         } else {
             payload.count = 1
+            payload.checked = true
             state.cartlist.push(payload)
-            console.log('没有')
         }
 
     }

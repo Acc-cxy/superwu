@@ -4,8 +4,8 @@
             ref="scroll">
       <cart-listitem
           v-for="(item,index) in cartcount"
-          :itemInfo="item"
-          :key="index">
+          v-bind:itemInfo="item"
+          v-bind:key="index">
       </cart-listitem>
     </scroll>
   </div>
@@ -23,13 +23,9 @@ export default {
     ...mapGetters(['cartcount'])
   },
   activated() {
-    console.log(11)
     this.$refs.scroll.refresh()
   },
   methods:{
-    // shopbox(){
-    //   this.$refs.scroll.refresh()
-    // }
   }
 }
 </script>
@@ -40,7 +36,7 @@ export default {
       left: 0;
       right: 0;
       top: 44px;
-      bottom: 49px;
+      bottom: 89px;
       overflow: hidden;
     }
 </style>

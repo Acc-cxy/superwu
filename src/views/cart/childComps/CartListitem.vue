@@ -1,8 +1,9 @@
 <template>
   <div id="shop-item">
-<!--    <div class="item-selector">-->
-<!--&lt;!&ndash;      <CheckButton @checkBtnClick="checkedChange" v-model="itemInfo.checked"></CheckButton>&ndash;&gt;-->
-<!--    </div>-->
+    <div class="item-selector">
+      <check-button :checkout="itemInfo.checked" @click.native="maibumai"></check-button>
+<!--      <CheckButton @checkBtnClick="checkedChange" v-model="itemInfo.checked"></CheckButton>-->
+    </div>
     <div class="item-img">
       <img :src="itemInfo.image" alt="商品图片">
     </div>
@@ -18,8 +19,13 @@
 </template>
 
 <script>
+import CheckButton from "@/views/cart/childComps/CheckButton";
+
 export default {
   name: "CartListitem",
+  components:{
+    CheckButton
+  },
   props:{
     itemInfo:{
         type:Object,
@@ -27,6 +33,11 @@ export default {
           return {}
         }
       }
+  },
+  methods:{
+    maibumai(){
+      this.itemInfo.checked = !this.itemInfo.checked
+    }
   }
 }
 </script>
