@@ -70,6 +70,7 @@
         return this.goods[this.currentType].list
       },
     },
+    mixins:[backtops],
     destroyed() {
       console.log('home-destroyed')
     },
@@ -79,12 +80,11 @@
     },
     deactivated() {
       this.saveY = this.$refs.scroll.getsaveY()
-      // console.log(this.saveY)
+      console.log(this.saveY)
 
       // 取消全局监听
       this.$bus.$off('getup',this.getup)
     },
-    mixins:[backtops],
     created() {
       // 1.请求多个数据
       this.getHomeMultidata()
@@ -123,12 +123,12 @@
         this.$refs.tabControl1.currentIndex = index;
         this.$refs.tabControl2.currentIndex = index;
       },
-      // backClick() {
-      //   this.$refs.scroll.scrollTo(0, 0,3000)
-      // },
       //监听滑动位置
       contentScroll(position) {
+<<<<<<< HEAD
         // console.log(position)
+=======
+>>>>>>> 48734fb5bf2117e6e7f72870263b86d0b138ed4d
         //判断backtop是否显示
         this.isShowBackTop = (-position.y) > 1000
 
