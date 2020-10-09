@@ -25,14 +25,6 @@ export default {
   },
   computed:{
     // totalprice() {
-    //   const cartList = this.$store.getters.cartlist;
-    //   return cartList.filter(item => {
-    //     return item.checked
-    //   }).reduce((preValue, item) => {
-    //     return preValue + item.count * item.price
-    //   }, 0).toFixed(2)
-    // }
-    // totalprice() {
     //    return '￥' + this.$store.state.cartlist.filter(item =>{
     //      return item.checked
     //    }).reduce((preValue,item) =>{
